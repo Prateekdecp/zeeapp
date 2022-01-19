@@ -11,7 +11,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		// shuttle change
+		// shuttle change by 
+		// has and add
 		Register register=new Register();
 		register.setFirstName("Prateek");
 		register.setEmail("prateek@gmail.com");
