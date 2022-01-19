@@ -15,6 +15,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		// add to it
 		Register register=new Register();
 		register.setFirstName("Prateek");
 		register.setEmail("prateek@gmail.com");
