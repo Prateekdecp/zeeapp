@@ -19,11 +19,11 @@ public class SubscriptionService {
 	{
 		return this.subscriptionrepo.addSubcription(subscription);
 	}
-	public Subscription getUserById(String id)
+	public Subscription getSubscriptionById(String id)
 	{
-		return this.subscriptionrepo.getUserById(id);
+		return this.subscriptionrepo.getSubscriptionById(id);
 	}
-	public Subscription[] getAllUsers()
+	public Subscription[] getAllSubscriptions()
 	{
 		return this.subscriptionrepo.getSubscriptions();
 	}

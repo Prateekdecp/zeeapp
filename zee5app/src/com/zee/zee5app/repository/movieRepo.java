@@ -1,6 +1,7 @@
 package com.zee.zee5app.repository;
 
 import com.zee.zee5app.dto.Movies;
+import com.zee.zee5app.dto.Register;
 
 public class movieRepo {
 	private Movies[] movies=new Movies[1000];
@@ -10,6 +11,27 @@ public class movieRepo {
 	{
 		return movies;
 	}
+	
+	public String deleteMovieById(String id)
+	{
+		Movies[] temp=new Movies[movies.length];
+		boolean flag=false;
+		for(int i=0,k=0;i<movies.length;i++)
+		{
+			if(movies[i]!=null && movies[i].getMovieId().equals(id))
+			{
+				flag=true;
+				continue;
+			}
+			else
+			{
+				temp[k++]=movies[i];
+			}
+		}
+		movies=temp;
+		return flag?"success":"id was not available";
+	}
+	
 	
 	public String addMovie(Movies movie)
 	{

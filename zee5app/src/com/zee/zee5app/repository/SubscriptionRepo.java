@@ -1,5 +1,6 @@
 package com.zee.zee5app.repository;
 
+import com.zee.zee5app.dto.Register;
 import com.zee.zee5app.dto.Subscription;
 
 public class SubscriptionRepo {
@@ -9,6 +10,29 @@ public class SubscriptionRepo {
 	public Subscription[] getSubscriptions()
 	{
 		return subscriptions;
+	}
+	
+	public String deleteSubscriptionById(String id)
+	{
+		{
+			Subscription[] temp=new Subscription[subscriptions.length];
+			boolean flag=false;
+			for(int i=0,k=0;i<subscriptions.length;i++)
+			{
+				if(subscriptions[i]!=null && subscriptions[i].getSubID().equals(id))
+				{
+					flag=true;
+					continue;
+				}
+				else
+				{
+					temp[k++]=subscriptions[i];
+				}
+			}
+			subscriptions=temp;
+			return flag?"success":"id was not available";
+		}
+		
 	}
 	
 	public String addSubcription(Subscription subscription)
@@ -23,7 +47,7 @@ public class SubscriptionRepo {
 		return "success";
 	}
 	
-	public Subscription getUserById(String subId)
+	public Subscription getSubscriptionById(String subId)
 	{
 		for (Subscription subscription : subscriptions) {
 			if(subscription!=null && subscription.getSubID().equals(subId))
