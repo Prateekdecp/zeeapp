@@ -14,8 +14,7 @@ import com.zee.zee5app.service.impl.UserServiceImpl;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		// add to it
+		// TODO Auto-generated method added 
 		Register register=new Register();
 		register.setFirstName("Prateek");
 		register.setEmail("prateek@gmail.com");
