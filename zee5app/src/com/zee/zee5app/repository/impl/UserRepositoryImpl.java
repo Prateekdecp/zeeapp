@@ -65,7 +65,7 @@ public class UserRepositoryImpl implements UserRepository2 {
 
 	@Override
 	public String deleteUserById(String id) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method 
 		Register[] temp=new Register[registers.length];
 		boolean flag=false;
 		for(int i=0,k=0;i<registers.length;i++)

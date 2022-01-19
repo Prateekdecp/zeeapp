@@ -1,6 +1,7 @@
 package com.zee.zee5app.repository.impl;
 
 import com.zee.zee5app.dto.Movies;
+import com.zee.zee5app.dto.Register;
 import com.zee.zee5app.repository.MovieRepo2;
 
 public class MovieRepositoryImpl implements MovieRepo2 {
@@ -56,6 +57,26 @@ public class MovieRepositoryImpl implements MovieRepo2 {
 			}
 		}
 		return "id does not exist";
+	}
+	@Override
+	public String deleteMovieById(String id) {
+		// TODO Auto-generated method stub
+		Movies[] temp=new Movies[movies.length];
+		boolean flag=false;
+		for(int i=0,k=0;i<movies.length;i++)
+		{
+			if(movies[i]!=null && movies[i].getMovieId().equals(id))
+			{
+				flag=true;
+				continue;
+			}
+			else
+			{
+				temp[k++]=movies[i];
+			}
+		}
+		movies=temp;
+		return flag?"success":"id was not available";
 	}
 
 }

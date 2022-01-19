@@ -7,4 +7,5 @@ public interface seriesRepo2 {
 	public String addSeries(Series serie);
 	public Series getSeriesById(String serieId);
 	public String modifySeries(String serieId,Series serie);
+	public String deleteSeriesById(String id);
 }

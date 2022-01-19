@@ -6,5 +6,5 @@ public interface MovieRepo2 {
 	public String addMovie(Movies movie);
 	public Movies getMovieById(String movieId);
 	public String modifyMovie(String movieId,Movies movie);
-	
+	public String deleteMovieById(String id);
 }

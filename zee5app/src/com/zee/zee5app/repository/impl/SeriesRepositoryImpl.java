@@ -1,5 +1,6 @@
 package com.zee.zee5app.repository.impl;
 
+import com.zee.zee5app.dto.Movies;
 import com.zee.zee5app.dto.Series;
 import com.zee.zee5app.repository.seriesRepo2;
 
@@ -62,5 +63,24 @@ public class SeriesRepositoryImpl implements seriesRepo2 {
 		}
 		return "id does not exist";
 	}
-
+	@Override
+	public String deleteSeriesById(String id) {
+		// TODO Auto-generated method stub
+		Series[] temp=new Series[series.length];
+		boolean flag=false;
+		for(int i=0,k=0;i<series.length;i++)
+		{
+			if(series[i]!=null && series[i].getSeriesId().equals(id))
+			{
+				flag=true;
+				continue;
+			}
+			else
+			{
+				temp[k++]=series[i];
+			}
+		}
+		series=temp;
+		return flag?"success":"id was not available";
+	}
 }

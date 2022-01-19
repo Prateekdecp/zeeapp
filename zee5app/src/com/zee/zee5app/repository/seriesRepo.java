@@ -1,6 +1,7 @@
 package com.zee.zee5app.repository;
 
 import com.zee.zee5app.dto.Series;
+import com.zee.zee5app.dto.Subscription;
 
 public class seriesRepo {
 	private Series  [] series=new Series[1000];
@@ -9,6 +10,28 @@ public class seriesRepo {
 	public Series[] getSeries()
 	{
 		return series;
+	}
+	
+	public String deleteSeriesById(String id)
+	{
+		{
+			Series[] temp=new Series[series.length];
+			boolean flag=false;
+			for(int i=0,k=0;i<series.length;i++)
+			{
+				if(series[i]!=null && series[i].getSeriesId().equals(id))
+				{
+					flag=true;
+					continue;
+				}
+				else
+				{
+					temp[k++]=series[i];
+				}
+			}
+			series=temp;
+			return flag?"success":"id was not available";
+		}
 	}
 	
 	public String addSeries(Series serie)
