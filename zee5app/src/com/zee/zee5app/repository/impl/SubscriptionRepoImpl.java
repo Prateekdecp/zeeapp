@@ -1,11 +1,13 @@
 package com.zee.zee5app.repository.impl;
 
+import java.util.ArrayList;
+
 import com.zee.zee5app.dto.Register;
 import com.zee.zee5app.dto.Subscription;
 import com.zee.zee5app.repository.SubscriptionRepo2;
 
 public class SubscriptionRepoImpl implements SubscriptionRepo2 {
-	private Subscription[] subscriptions=new Subscription[100];
+	private ArrayList<Subscription> subscriptions=new ArrayList<Subscription>();
 	private static int count=0;
 	
 	private SubscriptionRepoImpl()
@@ -20,8 +22,9 @@ public class SubscriptionRepoImpl implements SubscriptionRepo2 {
 			subscription=new SubscriptionRepoImpl();
 		return subscription;
 	}
+	
 	@Override
-	public Subscription[] getSubscriptions() {
+	public ArrayList<Subscription> getSubscriptions() {
 		// TODO Auto-generated method stub
 		return subscriptions;
 	}
@@ -29,14 +32,8 @@ public class SubscriptionRepoImpl implements SubscriptionRepo2 {
 	@Override
 	public String addSubcription(Subscription subscription) {
 		// TODO Auto-generated method stub
-		if(count==subscriptions.length)
-		{
-			Subscription temp[]=new Subscription[subscriptions.length*2];
-			System.arraycopy(subscriptions, 0, temp, 0, subscriptions.length);
-			subscriptions=temp;
-		}
-		subscriptions[count++]=subscription;
-		return "success";
+		boolean res=this.subscriptions.add(subscription);
+		return res?"success":"failure";
 	}
 
 	@Override
@@ -65,22 +62,16 @@ public class SubscriptionRepoImpl implements SubscriptionRepo2 {
 	@Override
 	public String deleteSubscriptionById(String id) {
 		// TODO Auto-generated method stub
-		Subscription[] temp=new Subscription[subscriptions.length];
-		boolean flag=false;
-		for(int i=0,k=0;i<subscriptions.length;i++)
+		int index=-1;
+		for(int i=0;i<subscriptions.size();i++)
 		{
-			if(subscriptions[i]!=null && subscriptions[i].getSubID().equals(id))
+			if(subscriptions.get(i).getSubID().equals(id))
 			{
-				flag=true;
-				continue;
-			}
-			else
-			{
-				temp[k++]=subscriptions[i];
+				index=i;
+				break;
 			}
 		}
-		subscriptions=temp;
-		return flag?"success":"id was not available";
+		return index!=-1?"success":"id was not available";
 	}
 
 }
