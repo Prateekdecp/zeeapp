@@ -1,7 +1,6 @@
 package com.zee.zee5app.repository.impl;
 
 import com.zee.zee5app.dto.Register;
-import com.zee.zee5app.repository.UserRepository;
 import com.zee.zee5app.repository.UserRepository2;
 
 public class UserRepositoryImpl implements UserRepository2 {
