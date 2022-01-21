@@ -1,13 +1,21 @@
 package com.zee.zee5app.repository.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.zee.zee5app.dto.Register;
 import com.zee.zee5app.repository.UserRepository2;
 
+import exception.IdNotFoundException;
+
 public class UserRepositoryImpl implements UserRepository2 {
-	private ArrayList<Register> registers=new ArrayList<Register>();
+	private HashSet<Register> registers=new LinkedHashSet<>();
 	private UserRepositoryImpl() {
 		// TODO Auto-generated constructor stub
 	}
@@ -31,6 +39,8 @@ public class UserRepositoryImpl implements UserRepository2 {
 	@Override
 	public String updateUser(String id, Register register) {
 		// TODO Auto-generated method stub
+		
+		
 		for(Register register1:registers)
 		{
 			if(register1!=null && register1.getId().equals(id))
@@ -41,38 +51,65 @@ public class UserRepositoryImpl implements UserRepository2 {
 		}
 		return "id does not exist";
 	}
-
 	@Override
-	public Optional<Register> getUserById(String id) {
+	public Optional<Register> getUserById(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
+		Register register2=null;
 		for (Register register : registers) {
-			if(register!=null && register.getId().equals(id))
-				return Optional.of(register);
-		}
-		return Optional.empty();
-	}
-
-	@Override
-	public ArrayList<Register> getAllUsers() {
-		// TODO Auto-generated method stub
-		return registers;
-	}
-
-	@Override
-	public String deleteUserById(String id) {
-		// TODO Auto-generated method 
-		int index=-1;
-		for(int i=0;i<registers.size();i++)
-		{
-			if(registers.get(i).getId().equals(id))
+			if(register.getId().equals(id))
 			{
-				index=i;
+				register2=register;
 				break;
 			}
 		}
-		if(index!=-1)
-			registers.remove(index);
-		return index==-1?"not found":"deleted successfully";
+		return Optional.of(Optional.ofNullable(register2).
+				orElseThrow(()->new IdNotFoundException("id was not found")));
 	}
+//	@Override
+//	public Register getUserById(String id) throws IdNotFoundException {
+//		// TODO Auto-generated method stub
+//		Register register2=null;
+//		for (Register register : registers) {
+//			if(register!=null && register.getId().equals(id))
+//				register2=register;
+//		}
+//		if(register2==null)
+//			throw new IdNotFoundException("id not found");
+//		return register2;
+//	}
+
+
+	
+	@Override
+	public Register[] getAllUsers() {
+		// TODO Auto-generated method stub
+		Register[] result=new Register[registers.size()];
+		return registers.toArray(result);
+	}
+	
+	@Override
+	public List<Register> GetAllUser() {
+		// TODO Auto-generated method stub
+		
+//		List<Register> list=new ArrayList(registers);
+//		Collections.sort(list);
+		return new ArrayList<>(registers);
+	}
+	
+	@Override
+	public String deleteUserById(String id) throws IdNotFoundException {
+		// TODO Auto-generated method 
+		Optional<Register> optional=this.getUserById(id);
+		if(optional.isPresent())
+		{
+			boolean result=registers.remove(optional.get());
+			if(result)
+				return "success";
+			else
+				return "fail";
+		}
+		throw new IdNotFoundException("id not found");
+	}
+
 
 }
