@@ -1,13 +1,19 @@
 package com.zee.zee5app.repository.impl;
 
 
+
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Optional;
+
 import com.zee.zee5app.dto.Movies;
 import com.zee.zee5app.dto.Register;
 import com.zee.zee5app.repository.MovieRepo2;
 
+import exception.MovieIdNotFoundException;
+
 public class MovieRepositoryImpl implements MovieRepo2 {
-	private Movies[] movies=new Movies[1000];
-	private static int count=0;
+	private HashSet<Movies> movies=new LinkedHashSet<>();
 	
 	private static MovieRepo2 repository;
 	
@@ -20,31 +26,17 @@ public class MovieRepositoryImpl implements MovieRepo2 {
 	@Override
 	public Movies[] getMovies() {
 		// TODO Auto-generated method stub
-		return movies;
+		Movies [] result=new Movies[movies.size()];
+		return movies.toArray(result);
 	}
 
 	@Override
 	public String addMovie(Movies movie) {
 		// TODO Auto-generated method stub
-		if(count==movies.length)
-		{
-			Movies temp[]=new Movies[movies.length*2];
-			System.arraycopy(movies, 0, temp, 0, movies.length);
-			movies=temp;
-		}
-		movies[count++]=movie;
-		return "success";
+		boolean res=movies.add(movie);
+		return res? "success":"failure";
 	}
 
-	@Override
-	public Movies getMovieById(String movieId) {
-		// TODO Auto-generated method stub
-		for (Movies movie : movies) {
-			if(movie!=null && movie.getMovieId().equals(movieId))
-				return movie;
-		}
-		return null;
-	}
 
 	@Override
 	public String modifyMovie(String movieId, Movies movie) {
@@ -60,24 +52,30 @@ public class MovieRepositoryImpl implements MovieRepo2 {
 		return "id does not exist";
 	}
 	@Override
-	public String deleteMovieById(String id) {
+	public String deleteMovieById(String id) throws MovieIdNotFoundException {
 		// TODO Auto-generated method stub
-		Movies[] temp=new Movies[movies.length];
-		boolean flag=false;
-		for(int i=0,k=0;i<movies.length;i++)
+		Optional<Movies> optional=getMovieById(id);
+		if(optional.isPresent())
 		{
-			if(movies[i]!=null && movies[i].getMovieId().equals(id))
+			boolean res=movies.remove(optional.get());
+			if(res)
+				return "success";
+			return "fail";
+		}
+		throw new MovieIdNotFoundException("movie id not found");
+	}
+	@Override
+	public Optional<Movies> getMovieById(String movieId) throws MovieIdNotFoundException {
+		// TODO Auto-generated method stub
+		Movies movies2=null;
+		for (Movies movies : movies) {
+			if(movies.getMovieId().equals(movieId))
 			{
-				flag=true;
-				continue;
-			}
-			else
-			{
-				temp[k++]=movies[i];
+				movies2=movies;
+				break;
 			}
 		}
-		movies=temp;
-		return flag?"success":"id was not available";
+		return Optional.of(Optional.ofNullable(movies2)).orElseThrow(()->new MovieIdNotFoundException("movieId not found"));
 	}
 
 }
