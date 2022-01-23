@@ -1,14 +1,18 @@
 package com.zee.zee5app.repository.impl;
 
+import java.util.Optional;
+import java.util.TreeSet;
+
 import com.zee.zee5app.dto.Movies;
 import com.zee.zee5app.dto.Series;
 import com.zee.zee5app.repository.seriesRepo2;
 
+import exception.SeriesNotFoundException;
+
 public class SeriesRepositoryImpl implements seriesRepo2 {
 
 	
-	private Series  [] series=new Series[1000];
-	private static int count=0;
+	private TreeSet<Series> series=new TreeSet<>();
 	private SeriesRepositoryImpl()
 	{
 		
@@ -24,30 +28,30 @@ public class SeriesRepositoryImpl implements seriesRepo2 {
 	@Override
 	public Series[] getSeries() {
 		// TODO Auto-generated method stub
-		return series;
+		Series[] result=new Series[series.size()];
+		return series.toArray(result);
 	}
 
 	@Override
 	public String addSeries(Series serie) {
 		// TODO Auto-generated method stub
-		if(count==series.length)
-		{
-			Series temp[]=new Series[series.length*2];
-			System.arraycopy(series, 0, temp, 0, series.length);
-			series=temp;
-		}
-		series[count++]=serie;
-		return "success";
+		boolean res=series.add(serie);
+		return res?"success":"failure";
 	}
 
 	@Override
-	public Series getSeriesById(String serieId) {
+	public Optional<Series> getSeriesById(String serieId) throws SeriesNotFoundException {
 		// TODO Auto-generated method stub
+		Series series2=null;
 		for (Series serie : series) {
 			if(serie!=null && serie.getSeriesId().equals(serieId))
-				return serie;
+			{
+				series2=serie;
+				break;
+			}
 		}
-		return null;
+		return Optional.of(Optional.ofNullable(series2)).
+				orElseThrow(()->new SeriesNotFoundException("series not found"));
 	}
 
 	@Override
@@ -64,23 +68,17 @@ public class SeriesRepositoryImpl implements seriesRepo2 {
 		return "id does not exist";
 	}
 	@Override
-	public String deleteSeriesById(String id) {
+	public String deleteSeriesById(String id) throws SeriesNotFoundException {
 		// TODO Auto-generated method stub
-		Series[] temp=new Series[series.length];
-		boolean flag=false;
-		for(int i=0,k=0;i<series.length;i++)
+		Optional<Series> optional=getSeriesById(id);
+		if(optional.isPresent())
 		{
-			if(series[i]!=null && series[i].getSeriesId().equals(id))
-			{
-				flag=true;
-				continue;
-			}
-			else
-			{
-				temp[k++]=series[i];
-			}
+			boolean res=series.remove(optional.get());
+			if(res)
+				return "success";
+			return "failure";
 		}
-		series=temp;
-		return flag?"success":"id was not available";
+		throw new SeriesNotFoundException("series not found exception");
+		
 	}
 }
