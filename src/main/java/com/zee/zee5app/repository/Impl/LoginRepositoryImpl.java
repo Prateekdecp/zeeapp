@@ -40,6 +40,7 @@ public class LoginRepositoryImpl implements LoginRepository {
 			prepStatement.setString(3, login.getRegId());
 			prepStatement.setString(4, login.getRole().toString());
 			int result = prepStatement.executeUpdate();
+//			connection.commit();
 			if (result > 0) {
 				connection.commit();
 				return "success";

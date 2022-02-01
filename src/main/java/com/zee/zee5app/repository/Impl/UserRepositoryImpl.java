@@ -33,12 +33,14 @@ public class UserRepositoryImpl implements UserRepository {
 	
 	@Autowired
 	DataSource dataSource;
-	LoginRepository loginrepository=null;
+	@Autowired
+	LoginRepository loginrepository;
 	public UserRepositoryImpl() throws IOException{
 		
 	}
 	
-	
+	@Autowired
+	PasswordUtils passwordUtils;
 	
 	@Override
 	public String addUser(Register register) {
@@ -62,8 +64,8 @@ public class UserRepositoryImpl implements UserRepository {
 			preparedStatement.setString(4, register.getEmail());
 			preparedStatement.setBigDecimal(6, register.getContactnumber());
 			
-			String salt = PasswordUtils.getSalt(30);
-			String encryptedPassword = PasswordUtils.generateSecurePassword(register.getPassword(), salt);
+			String salt = passwordUtils.getSalt(30);
+			String encryptedPassword = passwordUtils.generateSecurePassword(register.getPassword(), salt);
 			preparedStatement.setString(5, encryptedPassword);
 			
 			
@@ -79,8 +81,9 @@ public class UserRepositoryImpl implements UserRepository {
 				login.setRole(ROLE.ROLE_USER);
 				
 				String result2 = loginrepository.addCredentials(login);
+//				connection.commit();
 				if(result2.equals("success")) {
-					//connection.commit();
+//					connection.commit();
 					return "user added successfully";
 					
 				}
