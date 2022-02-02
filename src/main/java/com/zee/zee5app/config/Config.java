@@ -22,7 +22,7 @@ import com.zee.zee5app.utils.PasswordUtils;
 public class Config {
 	@Autowired
 	Environment environment;
-	
+	//gdgdh
 //	@Bean(name="ds")
 //	@Scope("prototype")// to get multiple objects
 //	public DataSource dataSource()
