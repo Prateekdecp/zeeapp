@@ -19,7 +19,6 @@ public class MainSpring {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		// cahanges
 		AbstractApplicationContext applicationContext=new AnnotationConfigApplicationContext(Config.class);
 
 		DataSource dataSource=applicationContext.getBean("ds",DataSource.class);
