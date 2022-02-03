@@ -53,7 +53,7 @@ public class Series implements Comparable<Series> {
 	private String category;
 	
 	@NotNull
-	private Date releaseDate;
+	private String releaseDate;
 	
 	@NotBlank
 	private String trailer;
