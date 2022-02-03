@@ -37,7 +37,7 @@ public class Episodes implements Comparable<Episodes>{
 	private int length;
 	
 	@NotBlank
-	private int seriesname;
+	private String seriesname;
 	@Override
 	public int compareTo(Episodes o) {
 		// TODO Auto-generated method stub

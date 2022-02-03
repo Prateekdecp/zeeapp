@@ -60,7 +60,7 @@ public class Series implements Comparable<Series> {
 	@NotBlank
 	private String cast;
 	@NotBlank
-	private String langauage;
+	private String language;
 	
 	@Min(value=1)
 	private int nofofepisodes;

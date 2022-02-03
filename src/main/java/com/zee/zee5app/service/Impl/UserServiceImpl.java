@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.zee.zee5app.dto.Login;
+import com.zee.zee5app.dto.ROLE;
 import com.zee.zee5app.dto.Register;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.exception.InvalidEmailException;
@@ -15,25 +17,31 @@ import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.exception.InvalidNameException;
 import com.zee.zee5app.exception.InvalidPasswordException;
 import com.zee.zee5app.repository.UserRepository;
+import com.zee.zee5app.service.LoginService;
 import com.zee.zee5app.service.UserService;
-
 
 @Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository repository;
-	
+
+	@Autowired
+	LoginService loginService;
+
 	public UserServiceImpl() throws IOException {
-		
+
 	}
 
 	@Override
 	public String addUser(Register register) {
 		// TODO Auto-generated method stub
-		Register register2=this.repository.save(register);
-		if(register2!=null)
+		Register register2 = this.repository.save(register);
+		Login login=new Login(register2.getFirstName(),register2.getPassword(),register2.getId(),ROLE.ROLE_USER);
+		if (register2 != null) {
+			loginService.addCredentials(login);
 			return "successfully added user";
+		} 
 		else
 			return "failed to add user";
 	}
@@ -55,8 +63,8 @@ public class UserServiceImpl implements UserService {
 	public Register[] getAllUsers()
 			throws InvalidIdLengthException, InvalidNameException, InvalidEmailException, InvalidPasswordException {
 		// TODO Auto-generated method stub
-		List<Register> list=this.repository.findAll();
-		Register array[]=new Register[list.size()];
+		List<Register> list = this.repository.findAll();
+		Register array[] = new Register[list.size()];
 		return list.toArray(array);
 	}
 
@@ -64,12 +72,10 @@ public class UserServiceImpl implements UserService {
 	public String deleteUserById(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		try {
-			Optional<Register> optional=getUserById(id);
-			if(optional.isEmpty()) {
+			Optional<Register> optional = getUserById(id);
+			if (optional.isEmpty()) {
 				throw new IdNotFoundException("record not found");
-			}
-			else
-			{
+			} else {
 				this.repository.deleteById(id);
 				return "success";
 			}
@@ -87,7 +93,5 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return Optional.ofNullable(this.repository.findAll());
 	}
-
-	
 
 }

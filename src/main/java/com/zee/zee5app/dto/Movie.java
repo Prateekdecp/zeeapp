@@ -38,7 +38,7 @@ public class Movie implements Comparable<Movie>{
 	@NotBlank
 	private String movieName;
 	
-	
+	@NotNull
 	private long length;
 	
 	@Id
@@ -53,8 +53,10 @@ public class Movie implements Comparable<Movie>{
 	@NotBlank
 	private String trailer;
 	@NotBlank
-	private String Cast;
+	private String cast;
 
+	@NotBlank
+	private String language;
 	@Override
 	public int compareTo(Movie o) {
 		// TODO Auto-generated method stub

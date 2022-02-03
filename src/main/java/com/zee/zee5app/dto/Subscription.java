@@ -39,14 +39,14 @@ public class Subscription implements Comparable<Subscription>{
 	@Column(name="subid")
 	private String id;
 	
-	@NotNull
+	@NotBlank
 	private String type;
 	
-	@NotNull
-    private Date dateOfPurchase;
+	@NotBlank
+    private String dateOfPurchase;
 	
 	@NotBlank
-    private Date paymentMode;
+    private String paymentMode;
     
     @NotNull
     private int amount;
