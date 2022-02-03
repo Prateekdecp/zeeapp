@@ -1,10 +1,18 @@
 package com.zee.zee5app.dto;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -44,7 +52,7 @@ public class Register implements Comparable<Register>{
 
 	@Id
 	@Column(name="regid")
-	private String id;
+	private String regid;
 	
 	@Size(max=50)
 	@NotBlank
@@ -69,7 +77,14 @@ public class Register implements Comparable<Register>{
 	@Override
 	public int compareTo(Register o) {
 		 //TODO Auto-generated method stub
-		return this.id.compareTo(o.getId());
+		return this.getRegid().compareTo(o.getRegid());
 	}
 	
+	@ManyToMany
+	@JoinTable(name="user_roles",joinColumns = @JoinColumn(name="regID"),
+	inverseJoinColumns = @JoinColumn(name="roleId"))
+	private Set<Role> roles=new HashSet<>();
+	
+	@OneToOne(mappedBy = "register",cascade = CascadeType.ALL)
+	private Subscription subscription;
 }

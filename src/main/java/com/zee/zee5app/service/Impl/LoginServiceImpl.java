@@ -5,8 +5,8 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zee.zee5app.dto.EROLE;
 import com.zee.zee5app.dto.Login;
-import com.zee.zee5app.dto.ROLE;
 import com.zee.zee5app.repository.LoginRepository;
 import com.zee.zee5app.service.LoginService;
 
@@ -15,7 +15,7 @@ public class LoginServiceImpl implements LoginService {
 
 
 	@Autowired
-	private static LoginRepository loginRepository;
+	private  LoginRepository loginRepository;
 
 	public LoginServiceImpl() throws IOException {
 	}
@@ -23,7 +23,10 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public String addCredentials(Login login) {
 		// TODO Auto-generated method stub
-		return null;
+		Login login1=loginRepository.save(login);
+		if(login1!=null)
+			return "success";
+		return "failure";
 	}
 
 	@Override
@@ -39,7 +42,7 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public String changeRole(String username, ROLE role) {
+	public String changeRole(String username, EROLE role) {
 		// TODO Auto-generated method stub
 		return null;
 	}
