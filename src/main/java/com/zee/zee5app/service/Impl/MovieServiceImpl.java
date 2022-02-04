@@ -28,7 +28,7 @@ public class MovieServiceImpl implements MovieService {
 	public String addMovie(Movie movie) {
 		// TODO Auto-generated method stub
 		Movie movie1=this.repository.save(movie);
-		return movie1!=null?"successfully added movie":"failed to add movie";
+		return movie1!=null?"success":"failed to add movie";
 	}
 
 	@Override

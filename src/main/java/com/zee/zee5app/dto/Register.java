@@ -19,6 +19,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.zee.zee5app.exception.InvalidEmailException;
 import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.exception.InvalidNameException;
@@ -52,6 +54,7 @@ public class Register implements Comparable<Register>{
 
 	@Id
 	@Column(name="regid")
+	@Length(min = 6)
 	private String regid;
 	
 	@Size(max=50)

@@ -48,4 +48,7 @@ public class Episodes implements Comparable<Episodes>{
 	@ManyToOne
 	@JoinColumn(name="seriesid") // create foreign_key
 	private Series series;
+	
+	@NotBlank
+	private String trailer;
 }
