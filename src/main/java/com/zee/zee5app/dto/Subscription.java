@@ -1,6 +1,5 @@
 package com.zee.zee5app.dto;
 
-import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +10,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.zee.zee5app.exception.InvalidAmountException;
 import com.zee.zee5app.exception.InvalidIdLengthException;
+import com.zee.zee5app.utils.CustomListSerializer;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -71,6 +74,8 @@ public class Subscription implements Comparable<Subscription>{
 
 	@OneToOne
 	@JoinColumn(name="regid")
+//	@JsonSerialize(using=CustomListSerializer.class)
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private Register register;
 	
 

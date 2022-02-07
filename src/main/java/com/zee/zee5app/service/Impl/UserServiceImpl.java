@@ -36,24 +36,26 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	@org.springframework.transaction.annotation.Transactional(rollbackFor = AlreadyExistsException.class)
-	public String addUser(Register register) throws AlreadyExistsException {
+	public Register addUser(Register register) throws AlreadyExistsException {
 		// TODO Auto-generated method stub
 		if(repository.existsByEmailAndContactnumber(register.getEmail(), register.getContactnumber()) == true) {
 			throw new AlreadyExistsException("this record already exists");
+			//NullPointerException("!!! null pointer exists !!!");
 		}
 		Register register2 = repository.save(register);
 		if (register2 != null) {
-			Login login = new Login(register.getEmail(), register.getPassword(), register.getRegid());
-			String result = loginService.addCredentials(login);
-			if(result.equals( "success")) {
-				return "record is sucessfully added to register as well as login";
-			}
-			else {
-				return "fail";
-			}
+//			Login login = new Login(register.getEmail(), register.getPassword(), register.getRegid());
+//			String result = loginService.addCredentials(login);
+//			if(result.equals( "success")) {
+//				return "record is sucessfully added to register as well as login";
+//			}
+//			else {
+//				return "fail";
+//			}
+			return register2;
 		}
 		else {
-			return "fail";
+			return null;
 		}
 	}
 
@@ -67,10 +69,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Optional<Register> getUserById(String id) throws IdNotFoundException, InvalidIdLengthException,
-			InvalidEmailException, InvalidPasswordException, InvalidNameException {
+	public Register getUserById(String id) throws IdNotFoundException{
 		// TODO Auto-generated method stub
-		return this.repository.findById(id);
+		Optional<Register> optional=this.repository.findById(id);
+		if(optional.isEmpty())
+			throw new IdNotFoundException("id does not exist");
+		else
+			return optional.get();
 	}
 
 	@Override
@@ -86,15 +91,14 @@ public class UserServiceImpl implements UserService {
 	public String deleteUserById(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		try {
-			Optional<Register> optional = getUserById(id);
-			if (optional.isEmpty()) {
+			Register optional = getUserById(id);
+			if (optional==null) {
 				throw new IdNotFoundException("record not found");
 			} else {
 				this.repository.deleteById(id);
-				return "success";
+				return "successfully deleted record";
 			}
-		} catch (IdNotFoundException | InvalidIdLengthException | InvalidEmailException | InvalidPasswordException
-				| InvalidNameException e) {
+		} catch (IdNotFoundException  e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new IdNotFoundException(e.getMessage());
@@ -103,7 +107,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Optional<List<Register>> getAllUserDetails()
-			throws InvalidIdLengthException, InvalidNameException, InvalidEmailException, InvalidPasswordException {
+	{
 		// TODO Auto-generated method stub
 		return Optional.ofNullable(this.repository.findAll());
 	}

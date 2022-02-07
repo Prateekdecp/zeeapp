@@ -21,6 +21,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zee.zee5app.exception.InvalidEmailException;
 import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.exception.InvalidNameException;
@@ -74,7 +75,7 @@ public class Register implements Comparable<Register>{
 	private String password;
 	
 	@NotNull
-	private BigDecimal contactnumber;
+	private BigInteger contactnumber;
 	
 
 	@Override
@@ -83,6 +84,7 @@ public class Register implements Comparable<Register>{
 		return this.getRegid().compareTo(o.getRegid());
 	}
 	
+	
 	@ManyToMany
 	@JoinTable(name="user_roles",joinColumns = @JoinColumn(name="regID"),
 	inverseJoinColumns = @JoinColumn(name="roleId"))
@@ -90,4 +92,8 @@ public class Register implements Comparable<Register>{
 	
 	@OneToOne(mappedBy = "register",cascade = CascadeType.ALL)
 	private Subscription subscription;
+	
+	@OneToOne(mappedBy = "register",cascade = CascadeType.ALL)
+//	@JsonIgnore
+	private Login login;
 }
