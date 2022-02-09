@@ -30,9 +30,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	LoginService loginService;
 
-	public UserServiceImpl() throws IOException {
-
-	}
+	
 	
 	@Override
 	@org.springframework.transaction.annotation.Transactional(rollbackFor = AlreadyExistsException.class)

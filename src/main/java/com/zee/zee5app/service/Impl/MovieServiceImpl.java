@@ -20,10 +20,6 @@ public class MovieServiceImpl implements MovieService {
 	
 	
 	
-    private MovieServiceImpl()throws IOException {
-		
-	}
-
 	@Override
 	public Movie addMovie(Movie movie) {
 		// TODO Auto-generated method stub

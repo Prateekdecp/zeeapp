@@ -1,5 +1,7 @@
 package com.zee.zee5app.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +20,7 @@ public class MovieController {
 	MovieService movieService;
 	
 	@PostMapping("/addMovie")
-	public ResponseEntity<?> addMovie(@RequestBody Movie movie)
+	public ResponseEntity<?> addMovie(@Valid@RequestBody Movie movie)
 	{
 		Movie result=movieService.addMovie(movie);
 		return ResponseEntity.status(201).body(result);
