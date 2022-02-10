@@ -23,24 +23,35 @@ public class UserServiceAspect {
 	public void springPointCutExp() {
 
 	}
+	
+	
+	@Pointcut("within(com.zee.zee5app.controller..*)"
+			+ "|| within(com.zee.zee5app.service.Impl..*)")
+	public void springPointCutExp2() {
 
-	@AfterThrowing(pointcut = "springPointCutExp()", throwing = "e")
+	}
+
+	@AfterThrowing(pointcut = "springPointCutExp() && springPointCutExp2()", throwing = "e")
 	public void logAfterThrowingException(JoinPoint joinpoint, Throwable e) {
 		log.error("exception {}.{}() with cause {}", joinpoint.getSignature().getName(),
 				joinpoint.getSignature().getName(), e.getCause() != null ? e.getCause() : "NULL");
 	}
 	
 	
-//	@Around(value=)
+	@Around(value="execution(* com.zee.zee5app.service.Impl.*.*(..))")
+	public void logAroundThrowingException()
+	{
+		System.out.println("hello from me");
+	}
 
 	@Before(value = "execution(* com.zee.zee5app.service.Impl.*.*(..))")
 	public void beforeAllServiceMethods() {
 		System.out.println("hello");
 	}
 
-//	@After(value = "execution(* com.zee.zee5app.service.Impl.*.*(..))")
-//	public void afterAllServiceMethods() {
-//		System.out.println("bbye");
-//	}
+	@After(value = "execution(* com.zee.zee5app.service.Impl.*.*(..))")
+	public void afterAllServiceMethods() {
+		System.out.println("bbye");
+	}
 	
 }

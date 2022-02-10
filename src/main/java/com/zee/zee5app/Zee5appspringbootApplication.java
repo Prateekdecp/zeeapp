@@ -12,7 +12,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import com.zee.zee5app.dto.Episodes;
 import com.zee.zee5app.dto.Movie;
-import com.zee.zee5app.dto.Register;
+import com.zee.zee5app.dto.User;
 import com.zee.zee5app.dto.Series;
 import com.zee.zee5app.dto.Subscription;
 import com.zee.zee5app.exception.AlreadyExistsException;

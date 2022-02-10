@@ -41,7 +41,7 @@ public class Login {
 //	@JsonSerialize(using=CustomListSerializer.class)
 	@JoinColumn(name="regid",nullable=false)
 	@JsonProperty(access = Access.WRITE_ONLY)
-	private Register register; 
+	private User register; 
 	
 
 }

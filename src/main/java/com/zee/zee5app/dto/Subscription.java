@@ -76,7 +76,7 @@ public class Subscription implements Comparable<Subscription>{
 	@JoinColumn(name="regid")
 //	@JsonSerialize(using=CustomListSerializer.class)
 	@JsonProperty(access = Access.WRITE_ONLY)
-	private Register register;
+	private User register;
 	
 
 	

@@ -12,7 +12,7 @@ public interface MovieService {
 	public Movie addMovie(Movie movie);
 	public String deleteMovie(String id) throws IdNotFoundException;
 	public String modifyMovie(String id, Movie movie) throws IdNotFoundException;
-	public Optional<Movie> getMovieById(String id) throws IdNotFoundException;
+	public Movie getMovieById(String id) throws IdNotFoundException;
 	public Optional<List<Movie>> getAllMovie();
 	
 }

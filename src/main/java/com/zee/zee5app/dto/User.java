@@ -4,9 +4,13 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.annotation.Generated;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
@@ -14,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -34,6 +39,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
+import net.bytebuddy.agent.builder.AgentBuilder.InitializationStrategy.SelfInjection.Lazy;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import java.lang.*;
@@ -47,53 +53,56 @@ import java.math.BigInteger;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity     //(entity class for ORM Mapping)
-@Table(name="register")
+@Entity // (entity class for ORM Mapping)
+@Table(name = "register", uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
+		@UniqueConstraint(columnNames = "email") })
 
-
-public class Register implements Comparable<Register>{
+public class User implements Comparable<User> {
 
 	@Id
-	@Column(name="regid")
+	@Column(name = "regid")
 	@Length(min = 6)
-	private String regid;
-	
-	@Size(max=50)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	@NotBlank
+	@Size(max = 20)
+	private String username;
+
+	@Size(max = 50)
 	@NotBlank
 	private String firstName;
-	
-	@Size(max=50)
+
+	@Size(max = 50)
 	@NotBlank
 	private String lastName;
-	
-	@Size(max=50)
+
+	@Size(max = 50)
 	@Email
 	private String email;
-	
-	@Size(max=100)
+
+	@Size(max = 100)
 	@NotBlank
 	private String password;
-	
+
 	@NotNull
 	private BigInteger contactnumber;
-	
 
 	@Override
-	public int compareTo(Register o) {
-		 //TODO Auto-generated method stub
-		return this.getRegid().compareTo(o.getRegid());
+	public int compareTo(User o) {
+		// TODO Auto-generated method stub
+		return this.getId().compareTo(o.getId());
 	}
-	
-	
-	@ManyToMany
-	@JoinTable(name="user_roles",joinColumns = @JoinColumn(name="regID"),
-	inverseJoinColumns = @JoinColumn(name="roleId"))
-	private Set<Role> roles=new HashSet<>();
-	
-	@OneToOne(mappedBy = "register",cascade = CascadeType.ALL)
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "regID"), inverseJoinColumns = @JoinColumn(name = "roleId"))
+	private Set<Role> roles = new HashSet<>();
+
+	@OneToOne(mappedBy = "register", cascade = CascadeType.ALL)
 	private Subscription subscription;
-	
-	@OneToOne(mappedBy = "register",cascade = CascadeType.ALL)
+
+	@OneToOne(mappedBy = "register", cascade = CascadeType.ALL)
 //	@JsonIgnore
 	private Login login;
+
 }
