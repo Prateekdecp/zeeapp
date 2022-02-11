@@ -51,7 +51,6 @@ import java.math.BigInteger;
 @Getter
 @EqualsAndHashCode
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity // (entity class for ORM Mapping)
 @Table(name = "register", uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
@@ -61,7 +60,6 @@ public class User implements Comparable<User> {
 
 	@Id
 	@Column(name = "regid")
-	@Length(min = 6)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
@@ -85,7 +83,7 @@ public class User implements Comparable<User> {
 	@NotBlank
 	private String password;
 
-	@NotNull
+//	@NotNull
 	private BigInteger contactnumber;
 
 	@Override
@@ -98,11 +96,19 @@ public class User implements Comparable<User> {
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "regID"), inverseJoinColumns = @JoinColumn(name = "roleId"))
 	private Set<Role> roles = new HashSet<>();
 
-	@OneToOne(mappedBy = "register", cascade = CascadeType.ALL)
-	private Subscription subscription;
-
-	@OneToOne(mappedBy = "register", cascade = CascadeType.ALL)
-//	@JsonIgnore
-	private Login login;
+//	@OneToOne(mappedBy = "register", cascade = CascadeType.ALL)
+//	private Subscription subscription;
+//
+//	@OneToOne(mappedBy = "register", cascade = CascadeType.ALL)
+////	@JsonIgnore
+//	private Login login;
+	
+	public User(String username,String email,String password,String firstName,String lastName) {
+		this.username=username;
+		this.email=email;
+		this.password=password;
+		this.firstName=firstName;
+		this.lastName=lastName;
+	}
 
 }

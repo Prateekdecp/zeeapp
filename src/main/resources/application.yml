@@ -20,8 +20,6 @@ spring:
       ddl-auto: update
 server:
   port: 9005
-  servlet:
-    context-path: /api
 
 zee5app:
   app:

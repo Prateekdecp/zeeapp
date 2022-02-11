@@ -38,11 +38,11 @@ public class UserServiceAspect {
 	}
 	
 	
-	@Around(value="execution(* com.zee.zee5app.service.Impl.*.*(..))")
-	public void logAroundThrowingException()
-	{
-		System.out.println("hello from me");
-	}
+//	@Around(value="execution(* com.zee.zee5app.service.Impl.*.*(..))")
+//	public void logAroundThrowingException()
+//	{
+//		System.out.println("hello from me");
+//	}
 
 	@Before(value = "execution(* com.zee.zee5app.service.Impl.*.*(..))")
 	public void beforeAllServiceMethods() {

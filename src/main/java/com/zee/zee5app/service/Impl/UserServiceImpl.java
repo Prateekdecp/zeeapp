@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 	@org.springframework.transaction.annotation.Transactional(rollbackFor = AlreadyExistsException.class)
 	public User addUser(User register) throws AlreadyExistsException {
 		// TODO Auto-generated method stub
-		if(repository.existsByEmailAndContactnumber(register.getEmail(), register.getContactnumber()) == true) {
+		if(repository.existsByEmail(register.getEmail()) == true) {
 			throw new AlreadyExistsException("this record already exists");
 			//NullPointerException("!!! null pointer exists !!!");
 		}

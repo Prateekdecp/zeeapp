@@ -12,11 +12,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zee.zee5app.dto.User;
 
+import lombok.Data;
 import net.bytebuddy.agent.builder.AgentBuilder.FallbackStrategy.Simple;
 
+@Data
 public class UserDetailsImpl implements UserDetails {
 
-	private long id;
+	private Long id;
 	private String username;
 	private String email;
 

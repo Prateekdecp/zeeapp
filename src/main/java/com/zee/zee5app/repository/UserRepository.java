@@ -11,6 +11,8 @@ import com.zee.zee5app.dto.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 	
-	boolean existsByEmailAndContactnumber(String email,BigInteger contactnumber);
+//	Boolean existsByEmailAndContactnumber(String email,BigInteger contactnumber);
 	Optional<User> findByUsername(String username);
+	Boolean existsByUsername(String username);
+	Boolean existsByEmail(String email);
 }
