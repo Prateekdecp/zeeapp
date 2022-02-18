@@ -18,6 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,7 +46,7 @@ import com.zee.zee5app.service.UserService;
 //all insert movies/episodes====> admin
 //all retrieval movies/episodes/subscription details===> user
 
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/auth")
 public class UserController {

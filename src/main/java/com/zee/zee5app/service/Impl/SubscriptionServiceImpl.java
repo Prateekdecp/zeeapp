@@ -30,10 +30,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 	@Override
-	public String addSubscription(Subscription subscription) throws InvalidAmountException {
+	public Subscription addSubscription(Subscription subscription) throws InvalidAmountException {
 		// TODO Auto-generated method stub
 		Subscription subscription2= this.repository.save(subscription);
-		return subscription2!=null?"subscription added successfully":"failed to add subscription";
+		return subscription2!=null?subscription2:null;
 	}
 
 	@Override
